@@ -112,7 +112,7 @@ fn diagnose_open_err(path: &std::path::Path, e: hidapi::HidError) -> anyhow::Err
              Either:\n\
               • Make sure you're logged in at a local seat (modern systemd-udev grants a uaccess ACL automatically), or\n\
               • Install the udev rule shipped with this tool:\n\
-                  sudo cp contrib/70-sk2rgb.rules /etc/udev/rules.d/\n\
+                  sudo install -o 0 -g 0 -m 0644 contrib/70-sk2rgb.rules /etc/udev/rules.d/\n\
                   sudo udevadm control --reload\n\
                   sudo udevadm trigger --subsystem-match=hidraw\n\
              \n\

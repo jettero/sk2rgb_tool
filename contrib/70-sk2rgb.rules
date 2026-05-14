@@ -2,7 +2,7 @@
 # Skorpion K2 RGB keyboard's vendor command channel (interface 1, hidraw).
 #
 # Install:
-#   sudo cp contrib/70-sk2rgb.rules /etc/udev/rules.d/
+#   sudo install -o 0 -g 0 -m 0644 contrib/70-sk2rgb.rules /etc/udev/rules.d/
 #   sudo udevadm control --reload
 #   sudo udevadm trigger --subsystem-match=hidraw
 #
