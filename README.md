@@ -93,9 +93,19 @@ cargo build --release
 
 ## Permissions
 
-The K2 gets a `uaccess` ACL automatically (modern systemd-udev), so
-`/dev/hidraw1` is user-writable when you're at the seat. No custom udev
-rule needed.
+On modern systemd-udev the K2 already gets a `uaccess` ACL automatically,
+so its hidraw nodes are user-writable when you're at a local seat. For
+stripped-down or older systems, install the rule shipped under
+`contrib/`:
+
+```sh
+sudo install -o 0 -g 0 -m 0644 contrib/70-sk2rgb.rules /etc/udev/rules.d/
+sudo udevadm control --reload
+sudo udevadm trigger --subsystem-match=hidraw
+```
+
+`sk2rgb_tool probe` will tell you (in plain English) if it can't open
+the device because of permissions and point at the rule.
 
 ## How it talks to the keyboard
 
