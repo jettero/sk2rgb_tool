@@ -1,0 +1,21 @@
+[package]
+name = "sk2rgb_tool"
+version = "0.0.1"
+edition = "2024"
+description = "Linux tool for programming the CyberPowerPC Skorpion K2 RGB keyboard (VID 04b4:5004) — key remap, LED control."
+license = "MIT"
+
+[lib]
+name = "sk2rgb_tool"
+path = "src/lib.rs"
+
+[[bin]]
+name = "sk2rgb_tool"
+path = "src/main.rs"
+
+[dependencies]
+anyhow = "1"
+clap = { version = "4.5", features = ["derive"] }
+env_logger = "0.11"
+hidapi = { version = "2", default-features = false, features = ["linux-native"] }
+log = "0.4"
