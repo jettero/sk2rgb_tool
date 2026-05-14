@@ -24,10 +24,7 @@ pub enum Command {
     /// Set keymap slot `slot` to emit XT scancode `scancode`. Slot and
     /// scancode are hex (e.g. `3a 1d`). UNSAFE for arbitrary slots until
     /// SPEC.md (P0) caps-slot decode is resolved.
-    SetKey {
-        slot: String,
-        scancode: String,
-    },
+    SetKey { slot: String, scancode: String },
 
     /// LED commands — effect modes and custom-mode painting.
     #[command(subcommand)]

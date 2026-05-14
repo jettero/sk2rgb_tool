@@ -1,5 +1,6 @@
 pub mod color;
 pub mod consts;
+pub mod device;
 pub mod groups;
 pub mod keyboard;
 pub mod keys;

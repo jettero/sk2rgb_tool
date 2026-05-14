@@ -5,7 +5,7 @@ use clap::Parser as _;
 use log::debug;
 
 use crate::options::{Command, CustomCommand, LedCommand, Options};
-use sk2rgb_tool::paint;
+use sk2rgb_tool::{device, paint};
 
 fn main() -> Result<()> {
     env_logger::init();
@@ -13,7 +13,7 @@ fn main() -> Result<()> {
     debug!("options: {opts:?}");
 
     match opts.command {
-        Command::Probe => bail!("probe: not implemented yet — see TODO.md"),
+        Command::Probe => probe(),
         Command::FactoryReset => bail!("factory-reset: not implemented yet — see TODO.md"),
         Command::SetKey { .. } => bail!("set-key: not implemented yet — see TODO.md"),
         Command::Led(led) => handle_led(led, opts.dry_run),
@@ -56,12 +56,36 @@ fn paint_cmd(program: Option<String>, file: Option<String>, dry_run: bool) -> Re
             println!("stmt {i}: color={:?}", s.color);
             for k in &s.keys {
                 let pos = k.led_position();
-                println!("  {} (xt={:?}, led_pos={:?})", k.name(), k.xt_scancode(), pos);
+                println!(
+                    "  {} (xt={:?}, led_pos={:?})",
+                    k.name(),
+                    k.xt_scancode(),
+                    pos
+                );
             }
         }
         return Ok(());
     }
     bail!("non-dry-run paint not implemented yet — device write path is gated on SPEC P0");
+}
+
+fn probe() -> Result<()> {
+    let dev = device::Device::open()?;
+    let manufacturer = dev.handle.get_manufacturer_string().ok().flatten();
+    let product = dev.handle.get_product_string().ok().flatten();
+    let serial = dev.handle.get_serial_number_string().ok().flatten();
+    println!(
+        "opened K2 ({:04x}:{:04x})",
+        sk2rgb_tool::consts::VENDOR_ID,
+        sk2rgb_tool::consts::PRODUCT_ID
+    );
+    println!(
+        "  manufacturer: {}",
+        manufacturer.as_deref().unwrap_or("(none)")
+    );
+    println!("  product:      {}", product.as_deref().unwrap_or("(none)"));
+    println!("  serial:       {}", serial.as_deref().unwrap_or("(none)"));
+    Ok(())
 }
 
 fn read_program(path: &str) -> Result<String> {

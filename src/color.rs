@@ -12,28 +12,28 @@ impl Rgb {
 /// can see them on the K2.
 pub fn named(name: &str) -> Option<Rgb> {
     Some(match name.to_ascii_lowercase().as_str() {
-        "black" | "off"        => Rgb(0, 0, 0),
-        "white"                => Rgb(255, 255, 255),
-        "gray" | "grey"        => Rgb(128, 128, 128),
+        "black" | "off" => Rgb(0, 0, 0),
+        "white" => Rgb(255, 255, 255),
+        "gray" | "grey" => Rgb(128, 128, 128),
 
-        "red"                  => Rgb(255, 0, 0),
-        "green"                => Rgb(0, 255, 0),
-        "blue"                 => Rgb(0, 0, 255),
-        "yellow"               => Rgb(255, 255, 0),
-        "magenta"              => Rgb(255, 0, 255),
-        "cyan"                 => Rgb(0, 255, 255),
+        "red" => Rgb(255, 0, 0),
+        "green" => Rgb(0, 255, 0),
+        "blue" => Rgb(0, 0, 255),
+        "yellow" => Rgb(255, 255, 0),
+        "magenta" => Rgb(255, 0, 255),
+        "cyan" => Rgb(0, 255, 255),
 
-        "orange"               => Rgb(255, 96, 0),
-        "pink"                 => Rgb(255, 64, 160),
-        "purple"               => Rgb(160, 0, 255),
-        "violet"               => Rgb(200, 80, 255),
-        "lime"                 => Rgb(160, 255, 0),
-        "sky"                  => Rgb(80, 180, 255),
-        "ocean"                => Rgb(0, 96, 200),
-        "lightblue"            => Rgb(160, 220, 255),
-        "blood"                => Rgb(160, 0, 0),
-        "brown"                => Rgb(120, 64, 0),
-        "umber"                => Rgb(96, 48, 16),
+        "orange" => Rgb(255, 96, 0),
+        "pink" => Rgb(255, 64, 160),
+        "purple" => Rgb(160, 0, 255),
+        "violet" => Rgb(200, 80, 255),
+        "lime" => Rgb(160, 255, 0),
+        "sky" => Rgb(80, 180, 255),
+        "ocean" => Rgb(0, 96, 200),
+        "lightblue" => Rgb(160, 220, 255),
+        "blood" => Rgb(160, 0, 0),
+        "brown" => Rgb(120, 64, 0),
+        "umber" => Rgb(96, 48, 16),
 
         _ => return None,
     })
@@ -78,7 +78,10 @@ fn parse_hex(h: &str) -> Result<Rgb> {
 fn parse_triplet(s: &str) -> Result<Rgb> {
     let parts: Vec<&str> = s.split(',').map(str::trim).collect();
     if parts.len() != 3 {
-        return Err(anyhow!("rgb triplet needs 3 components, got {}", parts.len()));
+        return Err(anyhow!(
+            "rgb triplet needs 3 components, got {}",
+            parts.len()
+        ));
     }
     Ok(Rgb(parts[0].parse()?, parts[1].parse()?, parts[2].parse()?))
 }

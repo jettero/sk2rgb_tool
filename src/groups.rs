@@ -9,7 +9,9 @@ pub fn resolve(name: &str) -> Option<Vec<Key>> {
 
         "fkeys" => vec![F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12],
         "arrows" => vec![Up, Down, Left, Right],
-        "modifiers" => vec![LCtrl, LShift, LAlt, LWin, RCtrl, RShift, RAlt, RWin, Caps, Fn, Menu],
+        "modifiers" => vec![
+            LCtrl, LShift, LAlt, LWin, RCtrl, RShift, RAlt, RWin, Caps, Fn, Menu,
+        ],
         "nav" => vec![Ins, Home, PgUp, Del, End, PgDn],
 
         "letters" => (b'a'..=b'z')
@@ -18,11 +20,8 @@ pub fn resolve(name: &str) -> Option<Vec<Key>> {
 
         "numrow" => vec![N1, N2, N3, N4, N5, N6, N7, N8, N9, N0, Minus, Equals],
         "numpad" => vec![
-            NumLock, KpDiv, KpMul, KpSub,
-            Kp7, Kp8, Kp9, KpAdd,
-            Kp4, Kp5, Kp6,
-            Kp1, Kp2, Kp3, KpEnter,
-            Kp0, KpDot,
+            NumLock, KpDiv, KpMul, KpSub, Kp7, Kp8, Kp9, KpAdd, Kp4, Kp5, Kp6, Kp1, Kp2, Kp3,
+            KpEnter, Kp0, KpDot,
         ],
 
         "qwerty_row" => vec![Q, W, E, R, T, Y, U, I, O, P],

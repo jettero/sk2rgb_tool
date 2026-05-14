@@ -1,0 +1,19 @@
+# Grant the logged-in seat user read/write access to the CyberPowerPC
+# Skorpion K2 RGB keyboard's vendor command channel (interface 1, hidraw).
+#
+# Install:
+#   sudo cp contrib/70-sk2rgb.rules /etc/udev/rules.d/
+#   sudo udevadm control --reload
+#   sudo udevadm trigger --subsystem-match=hidraw
+#
+# On modern systemd-udev (>= 198 or so) the keyboard already gets a
+# uaccess ACL automatically — this file is only needed on stripped-down
+# systems or older distros.
+
+SUBSYSTEM=="hidraw", ATTRS{idVendor}=="04b4", ATTRS{idProduct}=="5004", TAG+="uaccess"
+
+# Fallback for systems that don't honor `uaccess`. Uncomment and adjust
+# GROUP to a group your user is in (commonly `plugdev`, `users`, or
+# `input`):
+#
+#SUBSYSTEM=="hidraw", ATTRS{idVendor}=="04b4", ATTRS{idProduct}=="5004", MODE="0660", GROUP="plugdev"

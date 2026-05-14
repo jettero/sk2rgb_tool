@@ -88,7 +88,10 @@ mod tests {
     fn the_canonical_example() {
         let p = parse_program("wasd,f1,f12 = lime").unwrap();
         assert_eq!(p.len(), 1);
-        assert_eq!(p[0].keys, vec![Key::W, Key::A, Key::S, Key::D, Key::F1, Key::F12]);
+        assert_eq!(
+            p[0].keys,
+            vec![Key::W, Key::A, Key::S, Key::D, Key::F1, Key::F12]
+        );
     }
 
     #[test]
