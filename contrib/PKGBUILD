@@ -1,7 +1,7 @@
 # Maintainer: Paul Miller <paul@jettero.pl>
 pkgname=sk2rgb_tool-git
 _pkgname=sk2rgb_tool
-pkgver=0.0.1.r0.gHEAD
+pkgver=0.0.1.r4.g861cc2b
 pkgrel=1
 pkgdesc="Linux tool for programming the CyberPowerPC Skorpion K2 RGB keyboard (VID 04b4:5004)"
 arch=('x86_64')
