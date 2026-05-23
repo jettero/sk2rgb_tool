@@ -1,0 +1,23 @@
+_reload_udev() {
+    if command -v udevadm >/dev/null 2>&1
+    then udevadm control --reload >/dev/null 2>&1 || true
+         udevadm trigger --subsystem-match=hidraw >/dev/null 2>&1 || true
+         fi
+}
+
+post_install() {
+    _reload_udev
+    cat <<'EOF'
+==> Plug the Skorpion K2 in (or replug it) so the new udev rule grants
+    your seat user access to /dev/hidraw* for VID:PID 04b4:5004.
+==> `sk2rgb_tool --help` for usage.
+EOF
+}
+
+post_upgrade() {
+    _reload_udev
+}
+
+post_remove() {
+    _reload_udev
+}

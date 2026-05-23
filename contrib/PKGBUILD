@@ -1,0 +1,52 @@
+# Maintainer: Paul Miller <paul@jettero.pl>
+pkgname=sk2rgb_tool-git
+_pkgname=sk2rgb_tool
+pkgver=0.0.1.r0.gHEAD
+pkgrel=1
+pkgdesc="Linux tool for programming the CyberPowerPC Skorpion K2 RGB keyboard (VID 04b4:5004)"
+arch=('x86_64')
+url="https://github.com/jettero/sk2rgb_tool"
+license=('MIT')
+depends=('gcc-libs')
+makedepends=('cargo' 'git')
+provides=("$_pkgname")
+conflicts=("$_pkgname")
+source=("$_pkgname::git+$url.git")
+sha256sums=('SKIP')
+install="$_pkgname.install"
+
+pkgver() {
+    cd "$_pkgname"
+    local cargo_ver
+    cargo_ver=$(awk -F\" '/^version[[:space:]]*=/ { print $2; exit }' Cargo.toml)
+    printf '%s.r%s.g%s\n' \
+        "$cargo_ver" \
+        "$(git rev-list --count HEAD)" \
+        "$(git rev-parse --short HEAD)"
+}
+
+prepare() {
+    cd "$_pkgname"
+    cargo fetch --locked --target "$(rustc -vV | sed -n 's/host: //p')"
+}
+
+build() {
+    cd "$_pkgname"
+    export RUSTUP_TOOLCHAIN=stable
+    export CARGO_TARGET_DIR=target
+    cargo build --frozen --release
+}
+
+check() {
+    cd "$_pkgname"
+    export RUSTUP_TOOLCHAIN=stable
+    cargo test --frozen --release
+}
+
+package() {
+    cd "$_pkgname"
+    install -Dm755 "target/release/$_pkgname" "$pkgdir/usr/bin/$_pkgname"
+    install -Dm644 contrib/70-sk2rgb.rules "$pkgdir/usr/lib/udev/rules.d/70-sk2rgb.rules"
+    install -Dm644 README.md "$pkgdir/usr/share/doc/$_pkgname/README.md"
+    install -Dm644 SPEC.md   "$pkgdir/usr/share/doc/$_pkgname/SPEC.md"
+}
